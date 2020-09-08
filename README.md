@@ -17,6 +17,8 @@ topics = [['cat', 'animal', 'dog'], ['building', 'bank', 'house'], ['nature', 'w
 ```
 You can also specify the parameter `topk` which represents the number of words considered for each list. Note that `topk` must be less or equal than the length of the a topic list.  
 
+Here you can find a notebook with some examples: [https://github.com/silviatti/topic-model-diversity/blob/master/topic_diversity_experiments.ipynb](https://github.com/silviatti/topic-model-diversity/blob/master/topic_diversity_experiments.ipynb)
+
 #### Proportion of Unique Words:
 ```python 
 topics = [['cat', 'animal', 'dog'], ['building', 'bank', 'house'], ['nature', 'wilderness', 'lake']]
@@ -33,22 +35,27 @@ pairwise_jaccard_diversity(topics, topk=3)
 Out[1]: 1.0
 ```
 #### Word Embedding-based Centroid Distance
-This metric requires a word embedding space as input to compute distances (parameter `word_embedding_model`). 
+This metric requires a word embedding space as input to compute distances (parameter `word_embedding_model`). Please, use gensim to load the word embedding space. 
 ```python
+import gensim
+wv = gensim.models.fasttext.load_facebook_model('cc.en.300.bin.gz')
 topics = [['cat', 'animal', 'dog'], ['building', 'bank', 'house'], ['nature', 'wilderness', 'lake']]
 pairwise_word_embedding_distance(topics, wv, topk=3)
 
 Out[1]: 0.6379696850836505
 ```
-### Word Embedding-based Pairwise Distance
-This metric requires a word embedding space as input to compute distances (parameter `word_embedding_model`). 
+#### Word Embedding-based Pairwise Distance
+This metric requires a word embedding space as input to compute distances (parameter `word_embedding_model`). Please, use gensim to load the word embedding space. 
 ```python
+import gensim
+wv = gensim.models.fasttext.load_facebook_model('cc.en.300.bin.gz')
 topics = [['cat', 'animal', 'dog'], ['building', 'bank', 'house'], ['nature', 'wilderness', 'lake']]
 centroid_distance(topics, wv, topk=3)
 
 Out[1]: 0.8380562411966147
 ```
 #### Inverted Rank-Biased Overlap
+Parameter `weight` controls how top-weighted the metric is. The smaller the `weight`, the more top-weighted the metric is. When `weight = 0`, only the top-ranked word is considered. 
 ```python
 topics = [['cat', 'animal', 'dog'], ['building', 'bank', 'house'], ['nature', 'wilderness', 'lake']]
 print("irbo p=0.5:",irbo(topics, weight=0.5, topk=3))
@@ -56,8 +63,10 @@ print("irbo p=0.5:",irbo(topics, weight=0.5, topk=3))
 Out[1]: 1.0
 ```
 #### Word Embedding-based Rank-Biased Overlap
-This metric requires a word embedding space as input to compute distances (parameter `word_embedding_model`). 
+This metric requires a word embedding space as input to compute distances (parameter `word_embedding_model`). Please, use gensim to load the word embedding space. Parameter `weight` controls how top-weighted the metric is. The smaller the `weight`, the more top-weighted the metric is. When `weight = 0`, only the top-ranked word is considered. 
 ```python
+import gensim
+wv = gensim.models.fasttext.load_facebook_model('cc.en.300.bin.gz')
 topics = [['cat', 'animal', 'dog'], ['building', 'bank', 'house'], ['nature', 'wilderness', 'lake']]
 word_embedding_irbo(topics,wv, weight=0.9, topk=3)
 
