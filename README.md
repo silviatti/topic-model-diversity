@@ -10,7 +10,7 @@ The more diverse the resulting topics are, the higher will be the coverage of th
 * Word Embedding-based Pairwise Distance (WE-PD)
 * Word Embedding-based Inverted Rank-Biased Overlap (WE-IRBO)
 
-### How to use:
+## How to use:
 The necessary input for all the metrics is a list of topics, i.e. a list of list of strings. For example: 
 ```python
 topics = [['cat', 'animal', 'dog'], ['building', 'bank', 'house'], ['nature', 'wilderness', 'lake']]
@@ -72,6 +72,9 @@ word_embedding_irbo(topics,wv, weight=0.9, topk=3)
 
 Out[1]: 0.8225350005800525
 ```
+
+## Credits:
+For the implementation of inversed ranked-biased overlap, I included the [https://github.com/dlukes/rbo](rbo) package, all the rights reserved to the author of that package.
 
 ## References:
 <h5 id="puw">Adji Bousso Dieng, Francisco J. R. Ruiz, and David M.Blei. 2020. Topic modeling in embedding spaces.Trans. Assoc. Comput. Linguistics, 8:439–453. </h5>
