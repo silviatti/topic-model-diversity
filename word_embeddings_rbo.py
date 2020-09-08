@@ -61,7 +61,6 @@ def overlap(list1, list2, depth, index2word, word2vec):
     # NOTE: comment the preceding and uncomment the following line if you want
     # to stick to the algorithm as defined by the paper
     ov = embeddings_overlap(list1, list2, depth, index2word, word2vec)[0]
-    print("overlap", ov)
     return ov
 
 
