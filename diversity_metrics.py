@@ -7,10 +7,11 @@ from word_embeddings_rbo import word_embeddings_rbo
 
 def proportion_unique_words(topics, topk=10):
     """
-    compute proportion of unique words
+    compute the proportion of unique words
 
     Parameters
     ----------
+    topics: a list of lists of words
     topk: top k words on which the topic diversity will be computed
     """
     if topk > len(topics[0]):
@@ -25,19 +26,21 @@ def proportion_unique_words(topics, topk=10):
 
 def irbo(topics, weight=0.9, topk=10):
     """
-    compute inverted rank-biased overlap
+    compute the inverted rank-biased overlap
 
     Parameters
     ----------
+    topics: a list of lists of words
+    weight: p (float), default 1.0: Weight of each
+        agreement at depth d:p**(d-1). When set
+        to 1.0, there is no weight, the rbo returns
+        to average overlap.
     topk: top k words on which the topic diversity
           will be computed
-    weight: p (float), default 1.0: Weight of each
-            agreement at depth d:p**(d-1). When set
-            to 1.0, there is no weight, the rbo returns
-            to average overlap.
+
     Returns
     -------
-    td : score of the rank biased overlap over tht topics
+    irbo : score of the rank biased overlap over the topics
     """
     if topk > len(topics[0]):
         raise Exception('Words in topics are less than topk')
@@ -54,10 +57,17 @@ def irbo(topics, weight=0.9, topk=10):
 
 def word_embedding_irbo(topics, word_embedding_model, weight=0.9, topk=10):
     '''
-    :param weight: p (float), default 1.0: Weight of each agreement at depth d:
+    compute the word embedding-based inverted rank-biased overlap
+
+    Parameters
+    ----------
+    topics: a list of lists of words
+    weight: p (float), default 1.0: Weight of each agreement at depth d:
     p**(d-1). When set to 1.0, there is no weight, the rbo returns to average overlap.
-    :param topic_list: a list of lists of words
-    :return: rank_biased_overlap over the topics
+    
+    Returns
+    -------
+    weirbo: word embedding-based inverted rank_biased_overlap over the topics
     '''
     if topk > len(topics[0]):
         raise Exception('Words in topics are less than topk')
@@ -75,6 +85,19 @@ def word_embedding_irbo(topics, word_embedding_model, weight=0.9, topk=10):
 
 
 def pairwise_jaccard_diversity(topics, topk=10):
+    '''
+    compute the average pairwise jaccard distance between the topics 
+  
+    Parameters
+    ----------
+    topics: a list of lists of words
+    topk: top k words on which the topic diversity
+          will be computed
+    
+    Returns
+    -------
+    weirbo: word embedding-based inverted rank_biased_overlap over the topics
+    '''
     dist = 0
     count = 0
     for list1, list2 in combinations(topics, 2):
