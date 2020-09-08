@@ -84,7 +84,7 @@ def pairwise_jaccard_diversity(topics, topk=10):
     return dist/count
 
 
-def pairwise_word_embedding_distance(topics, wv, topk=10):
+def pairwise_word_embedding_distance(topics, word_embedding_model, topk=10):
     """
     :param topk: how many most likely words to consider in the evaluation
     :return: topic coherence computed on the word embeddings similarities
@@ -100,7 +100,7 @@ def pairwise_word_embedding_distance(topics, wv, topk=10):
             dist = 0
             for word1 in list1[:topk]:
                 for word2 in list2[:topk]:
-                    dist = dist + distance.cosine(wv.wv[word1], wv.wv[word2])
+                    dist = dist + distance.cosine(word_embedding_model.wv[word1], word_embedding_model.wv[word2])
                     word_counts = word_counts + 1
 
             dist = dist/word_counts
@@ -108,7 +108,7 @@ def pairwise_word_embedding_distance(topics, wv, topk=10):
         return sum_dist/count
 
 
-def centroid_distance(topics, wv, topk=10):
+def centroid_distance(topics, word_embedding_model, topk=10):
     """
     :param topk: how many most likely words to consider in the evaluation
     :return: topic coherence computed on the word embeddings similarities
@@ -119,12 +119,12 @@ def centroid_distance(topics, wv, topk=10):
         count = 0
         for list1, list2 in combinations(topics, 2):
             count = count + 1
-            centroid1 = np.zeros(wv.vector_size)
-            centroid2 = np.zeros(wv.vector_size)
+            centroid1 = np.zeros(word_embedding_model.vector_size)
+            centroid2 = np.zeros(word_embedding_model.vector_size)
             for word1 in list1[:topk]:
-                centroid1 = centroid1 + wv[word1]
+                centroid1 = centroid1 + word_embedding_model[word1]
             for word2 in list2[:topk]:
-                centroid2 = centroid2 + wv[word2]
+                centroid2 = centroid2 + word_embedding_model[word2]
             centroid1 = centroid1 / len(list1[:topk])
             centroid2 = centroid2 / len(list2[:topk])
         return distance.cosine(centroid1, centroid2)
