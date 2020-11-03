@@ -96,7 +96,7 @@ def pairwise_jaccard_diversity(topics, topk=10):
     
     Returns
     -------
-    weirbo: word embedding-based inverted rank_biased_overlap over the topics
+    pjd: average pairwise jaccard distance
     '''
     dist = 0
     count = 0
